@@ -57,6 +57,22 @@ export function mountAbout(app) {
         </div>
       </section>
 
+      <section class="section">
+        <h2 style="margin: 0 0 14px; font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 0.06em; font-size: clamp(22px, 4vw, 36px);">Other Portals</h2>
+        <div class="cards">
+          <a class="feature portal-card" href="https://yztxa.ccwu.cc" target="_blank" rel="noopener" style="cursor:pointer;">
+            <h3>YZTXA · 主站</h3>
+            <p>个人主站入口，更多作品与内容。</p>
+            <span style="font-size:12px; color: rgba(0,245,255,0.6); letter-spacing:0.08em;">yztxa.ccwu.cc →</span>
+          </a>
+          <a class="feature portal-card" href="https://beige476.rth1.xyz/" target="_blank" rel="noopener" style="cursor:pointer;">
+            <h3>Beige · 二号站</h3>
+            <p>副站入口，实验性项目与隐藏内容。</p>
+            <span style="font-size:12px; color: rgba(155,92,255,0.6); letter-spacing:0.08em;">beige476.rth1.xyz →</span>
+          </a>
+        </div>
+      </section>
+
       <div class="footer">ARCHIVE ACCESS GRANTED · ID VERIFIED</div>
     </main>
   `;
