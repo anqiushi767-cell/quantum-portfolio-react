@@ -557,8 +557,6 @@ button, input, textarea {
 
   .btn { min-width: 0; width: 100%; }
 
-  .orbit-ring { display: none; }
-
   .glitch-hover-note { display: none; }
 }
 
@@ -586,7 +584,7 @@ button, input, textarea {
   transform-style: preserve-3d;
   will-change: transform, filter;
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(48px, 8vw, 120px);
+  font-size: clamp(28px, 5vw, 56px);
   font-weight: 900;
   letter-spacing: 0.03em;
   text-transform: uppercase;
