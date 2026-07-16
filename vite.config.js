@@ -18,6 +18,7 @@ export default defineConfig({
         contact: resolve(__dirname, 'contact.html'),
         blackbox: resolve(__dirname, 'blackbox.html'),
         notfound: resolve(__dirname, '404.html'),
+        cabin: resolve(__dirname, 'cabin.html'),
       }
     }
   }

@@ -660,6 +660,45 @@ button, input, textarea {
   box-shadow: 0 0 6px rgba(0,245,255,0.5), 0 2px 0 rgba(255,43,214,0.2);
 }
 
+/* ─── Emergency Cabin ─── */
+
+.cabin-hud {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+  z-index: 3; display: flex; flex-direction: column; align-items: center;
+  gap: 6px; pointer-events: none;
+}
+
+.cabin-title {
+  font-family: 'Orbitron', sans-serif; font-size: clamp(16px, 3vw, 24px);
+  font-weight: 700; letter-spacing: 0.15em; color: #ff3333;
+  text-shadow: 0 0 20px rgba(255,0,0,0.6);
+  animation: emBlink 1s step-end infinite;
+}
+
+@keyframes emBlink {
+  50% { opacity: 0.2; }
+}
+
+.cabin-sub {
+  font-size: 11px; color: rgba(255,100,100,0.5); letter-spacing: 0.1em;
+}
+
+.cabin-back {
+  position: fixed; top: 16px; left: 16px; z-index: 3;
+  padding: 8px 14px; border: 1px solid rgba(255,60,60,0.3);
+  border-radius: 8px; background: rgba(10,0,0,0.7); backdrop-filter: blur(10px);
+  color: #ff4444; font-size: 13px; letter-spacing: 0.08em;
+  text-decoration: none; transition: all 0.25s ease;
+}
+
+.cabin-back:hover { border-color: rgba(255,80,80,0.6); box-shadow: 0 0 16px rgba(255,0,0,0.3); }
+
+.cabin-hint {
+  position: fixed; top: 20px; right: 20px; z-index: 3;
+  font-size: 11px; color: rgba(255,100,100,0.3); letter-spacing: 0.06em;
+  pointer-events: none;
+}
+
 @media (max-width: 980px) {
   .grid-two,
   .cards,

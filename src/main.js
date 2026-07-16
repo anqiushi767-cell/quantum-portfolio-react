@@ -1,6 +1,7 @@
 import './style.css';
 import { mountHome } from './pages/home';
 import { mountBlackbox } from './pages/blackbox';
+import { mountCabin } from './pages/cabin';
 import { mountAbout } from './pages/about';
 import { mountWorks } from './pages/works';
 import { mountLab } from './pages/lab';
@@ -17,7 +18,8 @@ const pageMap = {
   works: mountWorks,
   lab: mountLab,
   contact: mountContact,
-  '404': mountNotFound
+  '404': mountNotFound,
+  cabin: mountCabin,
 };
 
 if (pageMap[page]) {

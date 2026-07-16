@@ -26,6 +26,7 @@ export function mountNotFound(app) {
           </p>
           <div class="actions" style="justify-content:center; margin-top: 20px;">
             <a class="btn" href="/">返回主航道</a>
+            <a class="btn" href="/cabin.html" style="background:linear-gradient(135deg,rgba(255,0,0,0.2),rgba(80,0,0,0.15));border-color:rgba(255,60,60,0.4);">🚨 舱内情况</a>
           </div>
         </div>
       </section>
