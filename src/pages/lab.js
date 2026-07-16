@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar, glitchBurst } from '../shared';
+import { createSceneBackground, makeTopbar, glitchBurst, setupMobile, getMobileStarConfig } from '../shared';
 
 export function mountLab(app) {
   app.innerHTML = `
@@ -49,11 +49,11 @@ export function mountLab(app) {
 
   const scene = document.querySelector('#scene');
   const title = document.querySelector('#labTitle');
-  const bg = createSceneBackground(scene, {
+  const bg = createSceneBackground(scene, getMobileStarConfig({
     starCount: 17000,
     depth: 2600,
     layers: 4
-  });
+  }));
 
   const consoleText = document.querySelector('#consoleText');
   const modeState = document.querySelector('#modeState');
@@ -93,4 +93,5 @@ export function mountLab(app) {
   }
 
   animate();
+  setupMobile();
 }

@@ -138,6 +138,34 @@ button, input, textarea {
   transform: translateY(-1px);
 }
 
+/* ---- hamburger ---- */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 10;
+  transition: border-color .25s ease;
+}
+.hamburger span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--cyan);
+  transition: transform .3s ease, opacity .2s ease;
+  transform-origin: center;
+}
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
 .hero {
   max-width: 1180px;
   margin: 0 auto;
@@ -495,19 +523,54 @@ button, input, textarea {
   }
 }
 
-@media (max-width: 720px) {
-  .page {
-    padding: 18px;
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 6px;
   }
+  .nav.active { display: flex; }
 
   .topbar {
-    align-items: flex-start;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .nav a,
-  .btn {
-    width: 100%;
+  .page { padding: 16px; }
+  .panel { padding: 16px; }
+  .feature { min-height: auto; padding: 16px; }
+
+  .title {
+    font-size: clamp(32px, 10vw, 64px);
+    letter-spacing: 0.02em;
+  }
+
+  .section h2 {
+    font-size: clamp(22px, 6vw, 36px);
+  }
+
+  .btn { min-width: 0; width: 100%; }
+
+  .orbit-ring { display: none; }
+
+  .glitch-hover-note { display: none; }
+}
+
+@media (max-width: 480px) {
+  .page { padding: 12px; }
+  .panel { padding: 14px; border-radius: 18px; }
+  .feature { padding: 14px; border-radius: 16px; }
+  .stat { padding: 10px 12px; font-size: 13px; }
+  .footer { font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
 

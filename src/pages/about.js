@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar, glitchBurst } from '../shared';
+import { createSceneBackground, makeTopbar, glitchBurst, setupMobile, getMobileStarConfig } from '../shared';
 
 export function mountAbout(app) {
   app.innerHTML = `
@@ -64,11 +64,11 @@ export function mountAbout(app) {
   const scene = document.querySelector('#scene');
   const title = document.querySelector('#aboutTitle');
   const secret = document.querySelector('#secretAbout');
-  const bg = createSceneBackground(scene, {
+  const bg = createSceneBackground(scene, getMobileStarConfig({
     starCount: 13000,
     depth: 2200,
     layers: 4
-  });
+  }));
 
   title.addEventListener('click', () => glitchBurst(title));
 
@@ -84,4 +84,5 @@ export function mountAbout(app) {
   }
 
   animate();
+  setupMobile();
 }

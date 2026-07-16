@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar } from '../shared';
+import { createSceneBackground, makeTopbar, setupMobile, getMobileStarConfig } from '../shared';
 
 function buildAdvancedGlitchTitle(text) {
   return `
@@ -103,11 +103,11 @@ export function mountHome(app) {
   const btnBurst = document.querySelector('#btnBurst');
   const subtitle = document.querySelector('#subtitleText');
 
-  const bg = createSceneBackground(scene, {
+  const bg = createSceneBackground(scene, getMobileStarConfig({
     starCount: 22000,
     depth: 3800,
     layers: 6
-  });
+  }));
 
   let clickCount = 0;
   const glitchMessages = [
@@ -153,4 +153,5 @@ export function mountHome(app) {
   }
 
   animate();
+  setupMobile();
 }

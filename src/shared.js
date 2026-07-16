@@ -333,6 +333,9 @@ export function makeTopbar(active = '') {
         <span class="logo-mark"></span>
         <span>Quantum Signal</span>
       </a>
+      <button class="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
       <nav class="nav">
         ${links.map(([key, text, href]) => `
           <a href="${href}" style="${key === active ? 'border-color: rgba(0,245,255,0.5); box-shadow: 0 0 18px rgba(0,245,255,0.1);' : ''}">${text}</a>
@@ -340,4 +343,32 @@ export function makeTopbar(active = '') {
       </nav>
     </div>
   `;
+}
+
+export function setupMobile() {
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('.nav');
+  if (!hamburger || !nav) return;
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    nav.classList.toggle('active');
+  });
+
+  // Close nav after clicking a link (mobile)
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      nav.classList.remove('active');
+    });
+  });
+}
+
+export function getMobileStarConfig(desktop) {
+  if (window.innerWidth > 768) return desktop;
+  return {
+    starCount: Math.floor(desktop.starCount * 0.3),
+    depth: Math.floor(desktop.depth * 0.5),
+    layers: Math.max(2, Math.floor((desktop.layers || 4) * 0.5)),
+  };
 }

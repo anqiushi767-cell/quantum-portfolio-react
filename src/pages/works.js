@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar, glitchBurst } from '../shared';
+import { createSceneBackground, makeTopbar, glitchBurst, setupMobile, getMobileStarConfig } from '../shared';
 
 const works = [
   ['Stellar UI', '星空主题仪表盘界面，强调层次、光效与数据感。'],
@@ -44,11 +44,11 @@ export function mountWorks(app) {
 
   const scene = document.querySelector('#scene');
   const title = document.querySelector('#worksTitle');
-  const bg = createSceneBackground(scene, {
+  const bg = createSceneBackground(scene, getMobileStarConfig({
     starCount: 15000,
     depth: 2400,
     layers: 4
-  });
+  }));
 
   document.querySelectorAll('.work-card').forEach(card => {
     card.addEventListener('mouseenter', () => glitchBurst(title));
@@ -64,4 +64,5 @@ export function mountWorks(app) {
   }
 
   animate();
+  setupMobile();
 }

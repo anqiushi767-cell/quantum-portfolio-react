@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar, glitchBurst } from '../shared';
+import { createSceneBackground, makeTopbar, glitchBurst, setupMobile, getMobileStarConfig } from '../shared';
 
 export function mountContact(app) {
   app.innerHTML = `
@@ -48,11 +48,11 @@ export function mountContact(app) {
 
   const scene = document.querySelector('#scene');
   const title = document.querySelector('#contactTitle');
-  const bg = createSceneBackground(scene, {
+  const bg = createSceneBackground(scene, getMobileStarConfig({
     starCount: 12000,
     depth: 2200,
     layers: 4
-  });
+  }));
 
   const txState = document.querySelector('#txState');
   const channelState = document.querySelector('#channelState');
@@ -70,4 +70,5 @@ export function mountContact(app) {
   }
 
   animate();
+  setupMobile();
 }

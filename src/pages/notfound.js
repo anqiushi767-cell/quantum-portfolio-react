@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar } from '../shared';
+import { createSceneBackground, makeTopbar, setupMobile, getMobileStarConfig } from '../shared';
 
 export function mountNotFound(app) {
   app.innerHTML = `
@@ -27,11 +27,11 @@ export function mountNotFound(app) {
   `;
 
   const scene = document.querySelector('#scene');
-  const bg = createSceneBackground(scene, {
+  const bg = createSceneBackground(scene, getMobileStarConfig({
     starCount: 18000,
     depth: 2800,
     layers: 4
-  });
+  }));
 
   setInterval(() => {
     document.body.style.filter = Math.random() > 0.5
@@ -45,4 +45,5 @@ export function mountNotFound(app) {
   }
 
   animate();
+  setupMobile();
 }
