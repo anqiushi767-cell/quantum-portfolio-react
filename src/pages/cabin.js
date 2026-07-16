@@ -5,9 +5,12 @@ export function mountCabin(app) {
 
   app.innerHTML = `
     <div id="cabinCanvas" style="position:fixed;inset:0;z-index:0;"></div>
+    <div class="cctv-overlay" id="cctvOverlay"></div>
     <div class="cabin-hud">
-      <span class="cabin-title">EMERGENCY CABIN</span>
+      <span class="cabin-rec">● REC</span>
+      <span class="cabin-title">EMERGENCY CABIN · CCTV FEED</span>
       <span class="cabin-sub">LIGHTING SYSTEM FAILURE · BACKUP POWER ACTIVE</span>
+      <span class="cabin-ts" id="cabinTS">00:00:00</span>
     </div>
     <a href="/" class="cabin-back" title="返回">← EXIT</a>
     <div class="cabin-hint">拖拽旋转视角 · 滚轮缩放</div>
@@ -19,22 +22,22 @@ export function mountCabin(app) {
   const scene = new THREE.Scene();
 
   const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 30);
-  camera.position.set(0, 1.5, 2.5);
-  camera.lookAt(0, 1.3, -1);
+  camera.position.set(1.8, 2.2, 1.6);
+  camera.lookAt(0, 0.8, -0.5);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.8;
+  renderer.toneMappingExposure = 1.1;
   container.appendChild(renderer.domElement);
 
   // ─── Materials ───
-  const wallMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.6, metalness: 0.7 });
-  const floorMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.4, metalness: 0.8 });
-  const ceilMat = new THREE.MeshStandardMaterial({ color: 0x161616, roughness: 0.5, metalness: 0.6 });
-  const darkMat = new THREE.MeshStandardMaterial({ color: 0x0a0a0a, roughness: 0.7, metalness: 0.5 });
+  const wallMat = new THREE.MeshStandardMaterial({ color: 0x2a2a32, roughness: 0.5, metalness: 0.6 });
+  const floorMat = new THREE.MeshStandardMaterial({ color: 0x1e1e26, roughness: 0.35, metalness: 0.7 });
+  const ceilMat = new THREE.MeshStandardMaterial({ color: 0x24242e, roughness: 0.45, metalness: 0.55 });
+  const darkMat = new THREE.MeshStandardMaterial({ color: 0x1a1a22, roughness: 0.6, metalness: 0.5 });
 
   const group = new THREE.Group();
 
@@ -185,14 +188,44 @@ export function mountCabin(app) {
   scene.add(group);
 
   // ─── Ambient (very dim) ───
-  const ambient = new THREE.AmbientLight(0x111111, 0.3);
+  const ambient = new THREE.AmbientLight(0x1a1a2e, 0.55);
   scene.add(ambient);
 
-  // ─── Orbit controls (simple) ───
+  // ─── CCTV stripe glitch ───
+  const cctvOverlay = document.querySelector('#cctvOverlay');
+  const stripeColors = ['#00f5ff', '#ff2bd6', '#ff0000', '#00ff44', '#ffff00', '#fff'];
+  function spawnCCTVStripes() {
+    if (Math.random() > 0.5) return;
+    const count = 1 + Math.floor(Math.random() * 6);
+    let html = '';
+    for (let i = 0; i < count; i++) {
+      const top = Math.floor(Math.random() * 100);
+      const h = 1 + Math.floor(Math.random() * 3);
+      const color = stripeColors[Math.floor(Math.random() * stripeColors.length)];
+      const alpha = 0.15 + Math.random() * 0.35;
+      html += `<div style="top:${top}%;height:${h}px;background:${color};opacity:${alpha};position:absolute;left:0;right:0;mix-blend-mode:screen;pointer-events:none;"></div>`;
+    }
+    cctvOverlay.innerHTML = html;
+    setTimeout(() => cctvOverlay.innerHTML = '', 60 + Math.random() * 100);
+  }
+  setInterval(spawnCCTVStripes, 250);
+
+  // ─── CCTV timestamp ───
+  const tsEl = document.querySelector('#cabinTS');
+  const startTime = Date.now();
+  setInterval(() => {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const h = String(Math.floor(elapsed / 3600)).padStart(2, '0');
+    const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+    const s = String(elapsed % 60).padStart(2, '0');
+    tsEl.textContent = `${h}:${m}:${s}`;
+  }, 1000);
+
+  // ─── Orbit controls ───
   let isDragging = false, prevMX = 0, prevMY = 0;
-  let orbitTheta = 0, orbitPhi = 0.3;
-  let orbitRadius = 2.5;
-  const orbitTarget = new THREE.Vector3(0, 1.3, -0.5);
+  let orbitTheta = -0.5, orbitPhi = 0.9;
+  let orbitRadius = 3;
+  const orbitTarget = new THREE.Vector3(0, 0.8, -0.5);
 
   renderer.domElement.addEventListener('pointerdown', (e) => {
     isDragging = true;
