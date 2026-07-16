@@ -1,10 +1,14 @@
 import './style.css';
+import { inject } from '@vercel/analytics';
 import { mountHome } from './pages/home';
 import { mountAbout } from './pages/about';
 import { mountWorks } from './pages/works';
 import { mountLab } from './pages/lab';
 import { mountContact } from './pages/contact';
 import { mountNotFound } from './pages/notfound';
+
+// Initialize Vercel Web Analytics
+inject();
 
 const app = document.querySelector('#app');
 const page = document.body.dataset.page;
