@@ -1,5 +1,6 @@
 import './style.css';
 import { mountHome } from './pages/home';
+import { mountBlackbox } from './pages/blackbox';
 import { mountAbout } from './pages/about';
 import { mountWorks } from './pages/works';
 import { mountLab } from './pages/lab';
@@ -11,6 +12,7 @@ const page = document.body.dataset.page;
 
 const pageMap = {
   home: mountHome,
+  blackbox: mountBlackbox,
   about: mountAbout,
   works: mountWorks,
   lab: mountLab,
