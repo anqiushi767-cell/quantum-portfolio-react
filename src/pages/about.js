@@ -22,7 +22,7 @@ export function mountAbout(app) {
         <div class="panel">
           <h2>Profile Data</h2>
           <div class="card-list">
-            <div class="stat"><strong>Name</strong><span>[Your Name]</span></div>
+            <div class="stat"><strong>Name</strong><span>YZTXA</span></div>
             <div class="stat"><strong>Role</strong><span>Front-end Creator</span></div>
             <div class="stat"><strong>Focus</strong><span>Interactive UI / Motion / 3D Web</span></div>
             <div class="stat"><strong>Mode</strong><span>Experimental / Curious / Futuristic</span></div>

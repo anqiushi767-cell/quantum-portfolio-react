@@ -56,7 +56,7 @@ export function mountHome(app) {
           <div class="panel">
             <div class="kicker">Quantum Signal // Interactive Portfolio</div>
 
-            ${buildAdvancedGlitchTitle("Hello, I’m [Your Name]")}
+            ${buildAdvancedGlitchTitle("Hello, I'm YZTXA")}
 
             <p class="subtitle" id="subtitleText">
               这是一个面向未来的数字空间站首页。它不仅展示内容，还会对你的鼠标、点击和停留时间做出反馈。
