@@ -99,6 +99,7 @@ export function mountHome(app) {
       </section>
 
       <div class="footer">SYSTEM ONLINE · SIGNAL STABLE · READY FOR TRANSMISSION</div>
+      <div class="orbit-crosshair" id="orbitCrosshair"><span class="ch-h"></span><span class="ch-v"></span></div>
     </main>
   `;
 
@@ -171,6 +172,39 @@ export function mountHome(app) {
     setTimeout(() => ripple.remove(), 800);
   });
 
+  // — Crosshair cursor (orbit-ring only) —
+  const crosshair = document.querySelector('#orbitCrosshair');
+  let crossTarget = { x: -999, y: -999 };
+  let crossCurrent = { x: -999, y: -999 };
+
+  orbitRing.addEventListener('mouseenter', () => {
+    crosshair.classList.add('visible');
+    orbitRing.style.cursor = 'none';
+  });
+  orbitRing.addEventListener('mouseleave', () => {
+    crosshair.classList.remove('visible');
+    orbitRing.style.cursor = '';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    crossTarget.x = e.clientX;
+    crossTarget.y = e.clientY;
+    // Update immediately when first entering
+    if (!crosshair.classList.contains('visible')) {
+      crossCurrent.x = e.clientX;
+      crossCurrent.y = e.clientY;
+    }
+  });
+
+  function updateCrosshair() {
+    if (crosshair.classList.contains('visible')) {
+      crossCurrent.x += (crossTarget.x - crossCurrent.x) * 0.12;
+      crossCurrent.y += (crossTarget.y - crossCurrent.y) * 0.12;
+      crosshair.style.left = crossCurrent.x + 'px';
+      crosshair.style.top = crossCurrent.y + 'px';
+    }
+  }
+
   // ─── End Orbit Ring ───
 
   homeFeature.addEventListener('click', () => {
@@ -182,6 +216,7 @@ export function mountHome(app) {
   function animate() {
     requestAnimationFrame(animate);
     bg.tick({ speed: 1.2 });
+    updateCrosshair();
   }
 
   animate();
