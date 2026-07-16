@@ -400,6 +400,72 @@ button, input, textarea {
     radial-gradient(circle at center, rgba(155,92,255,0.08), transparent 58%);
   box-shadow: inset 0 0 50px rgba(0,245,255,0.06), 0 0 40px rgba(155,92,255,0.06);
   position: relative;
+  transition: transform 0.1s ease-out, box-shadow 0.4s ease;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+.orbit-ring:active {
+  box-shadow: inset 0 0 80px rgba(0,245,255,0.15), 0 0 70px rgba(155,92,255,0.15);
+}
+
+/* Orbiting dots */
+.orbit-dot {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 6px; height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px rgba(0,245,255,0.8), 0 0 18px rgba(0,245,255,0.4);
+  animation: orbitSpin var(--orbit-speed, 6s) linear infinite;
+}
+
+.od-1 { --orbit-speed: 5s;  width: 6px; height: 6px; margin: -3px 0 0 -3px; background: #00f5ff; }
+.od-2 { --orbit-speed: 8s;  width: 4px; height: 4px; margin: -2px 0 0 -2px; background: #9b5cff; animation-direction: reverse; }
+.od-3 { --orbit-speed: 11s; width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px; background: #ff2bd6; }
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg) translateX(42%) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(42%) rotate(-360deg); }
+}
+
+/* Core pulse */
+.orbit-core {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 10px; height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 14px rgba(0,245,255,0.9), 0 0 30px rgba(155,92,255,0.5);
+  animation: corePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.6); opacity: 1; }
+}
+
+/* Click ripple */
+.orbit-ripple {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(0,245,255,0.5);
+  box-shadow: 0 0 20px rgba(0,245,255,0.4);
+  pointer-events: none;
+  animation: rippleOut 0.8s ease-out forwards;
+}
+
+@keyframes rippleOut {
+  to {
+    width: 120%; height: 120%;
+    margin: -60% 0 0 -60%;
+    opacity: 0;
+    border-color: transparent;
+  }
 }
 
 .orbit-ring::before,

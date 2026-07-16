@@ -73,7 +73,12 @@ export function mountHome(app) {
           </div>
 
           <div class="panel">
-            <div class="orbit-ring"></div>
+            <div class="orbit-ring" id="orbitRing">
+              <div class="orbit-dot od-1"></div>
+              <div class="orbit-dot od-2"></div>
+              <div class="orbit-dot od-3"></div>
+              <div class="orbit-core"></div>
+            </div>
           </div>
         </div>
 
@@ -140,6 +145,33 @@ export function mountHome(app) {
   });
 
   btnBurst.addEventListener('click', () => triggerGlitch(1.1));
+
+  // ─── Orbit Ring Interactions ───
+
+  const orbitRing = document.querySelector('#orbitRing');
+
+  // Parallax tilt on mouse move
+  window.addEventListener('mousemove', (e) => {
+    if (!orbitRing || window.innerWidth <= 768) return;
+    const rect = orbitRing.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / rect.width;
+    const dy = (e.clientY - cy) / rect.height;
+    const tiltX = dy * -12;
+    const tiltY = dx * 12;
+    orbitRing.style.transform = `perspective(600px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+  });
+
+  // Click ripple
+  orbitRing.addEventListener('click', (e) => {
+    const ripple = document.createElement('div');
+    ripple.className = 'orbit-ripple';
+    orbitRing.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 800);
+  });
+
+  // ─── End Orbit Ring ───
 
   homeFeature.addEventListener('click', () => {
     homeFeature.querySelector('p').textContent =
