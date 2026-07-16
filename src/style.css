@@ -475,28 +475,25 @@ button, input, textarea {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.25s ease;
-  transform: translate(-50%, -50%);
-  width: 60px; height: 60px;
+  inset: 0;
 }
 
 .orbit-crosshair.visible { opacity: 1; }
 
-.ch-h, .ch-v {
-  position: absolute;
-  background: rgba(0, 245, 255, 0.7);
-  box-shadow: 0 0 6px rgba(0, 245, 255, 0.5), 0 0 14px rgba(0, 245, 255, 0.25);
-}
-
 .ch-h {
-  top: 50%; left: 0; right: 0;
+  position: absolute;
+  left: 0; right: 0;
   height: 1px;
-  margin-top: -0.5px;
+  background: rgba(0, 245, 255, 0.5);
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.4), 0 0 20px rgba(0, 245, 255, 0.15);
 }
 
 .ch-v {
-  left: 50%; top: 0; bottom: 0;
+  position: absolute;
+  top: 0; bottom: 0;
   width: 1px;
-  margin-left: -0.5px;
+  background: rgba(0, 245, 255, 0.5);
+  box-shadow: 0 0 8px rgba(0, 245, 255, 0.4), 0 0 20px rgba(0, 245, 255, 0.15);
 }
 
 .orbit-ring::before,

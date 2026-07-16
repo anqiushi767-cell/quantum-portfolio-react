@@ -200,8 +200,10 @@ export function mountHome(app) {
     if (crosshair.classList.contains('visible')) {
       crossCurrent.x += (crossTarget.x - crossCurrent.x) * 0.12;
       crossCurrent.y += (crossTarget.y - crossCurrent.y) * 0.12;
-      crosshair.style.left = crossCurrent.x + 'px';
-      crosshair.style.top = crossCurrent.y + 'px';
+      const h = crosshair.querySelector('.ch-h');
+      const v = crosshair.querySelector('.ch-v');
+      h.style.top = crossCurrent.y + 'px';
+      v.style.left = crossCurrent.x + 'px';
     }
   }
 
