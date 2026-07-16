@@ -17,7 +17,6 @@ export default defineConfig({
         lab: resolve(__dirname, 'lab.html'),
         contact: resolve(__dirname, 'contact.html'),
         blackbox: resolve(__dirname, 'blackbox.html'),
-        bridge: resolve(__dirname, 'bridge.html'),
         notfound: resolve(__dirname, '404.html'),
       }
     }

@@ -1,7 +1,6 @@
 import './style.css';
 import { mountHome } from './pages/home';
 import { mountBlackbox } from './pages/blackbox';
-import { mountBridge } from './pages/bridge';
 import { mountAbout } from './pages/about';
 import { mountWorks } from './pages/works';
 import { mountLab } from './pages/lab';
@@ -14,7 +13,6 @@ const page = document.body.dataset.page;
 const pageMap = {
   home: mountHome,
   blackbox: mountBlackbox,
-  bridge: mountBridge,
   about: mountAbout,
   works: mountWorks,
   lab: mountLab,
