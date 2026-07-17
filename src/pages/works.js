@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar, glitchBurst, setupMobile, getMobileStarConfig } from '../shared';
+import { createSceneBackground, makeTopbar, glitchBurst, setupMobile, getMobileStarConfig, initVariableProximity } from '../shared';
 
 const works = [
   ['Stellar UI', '星空主题仪表盘界面，强调层次、光效与数据感。'],
@@ -56,6 +56,9 @@ export function mountWorks(app) {
       const p = card.querySelector('p');
       p.textContent += ' // signal locked.';
     });
+
+    // Variable proximity on card titles
+    initVariableProximity(card.querySelector('h3'), { radius: 150 });
   });
 
   function animate() {

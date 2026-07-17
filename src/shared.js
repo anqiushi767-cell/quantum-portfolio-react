@@ -485,3 +485,46 @@ export function initBorderGlow(el, opts = {}) {
   el.addEventListener('pointerenter', () => { isHovered = true; visible = true; update(); });
   el.addEventListener('pointerleave', () => { isHovered = false; visible = false; update(); });
 }
+
+export function initVariableProximity(el, opts = {}) {
+  if (!el) return;
+  const { radius = 120, fromSettings = "'wght' 300", toSettings = "'wght' 800", falloff = 'linear' } = opts;
+  const text = el.textContent.trim();
+  el.textContent = '';
+
+  // Split into individual letter spans
+  const letters = [];
+  for (const ch of text) {
+    const span = document.createElement('span');
+    span.textContent = ch;
+    span.style.display = 'inline-block';
+    span.style.fontVariationSettings = fromSettings;
+    span.style.transition = 'none';
+    el.appendChild(span);
+    letters.push(span);
+  }
+
+  let mouseX = -9999, mouseY = -9999;
+
+  function calcFalloff(d) {
+    const norm = Math.min(Math.max(1 - d / radius, 0), 1);
+    if (falloff === 'exponential') return norm * norm;
+    if (falloff === 'gaussian') return Math.exp(-((d / (radius / 2)) ** 2) / 2);
+    return norm;
+  }
+
+  function update() {
+    if (mouseX === -9999) return;
+    letters.forEach(span => {
+      const r = span.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dist = Math.sqrt((mouseX - cx) ** 2 + (mouseY - cy) ** 2);
+      if (dist >= radius) { span.style.fontVariationSettings = fromSettings; return; }
+      const t = calcFalloff(dist);
+      span.style.fontVariationSettings = `'wght' ${300 + 500 * t}`;
+    });
+  }
+
+  document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; update(); });
+}
