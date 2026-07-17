@@ -325,6 +325,7 @@ export function makeTopbar(active = '') {
     ['works', 'Works', '/works.html'],
     ['lab', 'Lab', '/lab.html'],
     ['blackbox', 'Blackbox', '/blackbox.html'],
+    ['terminal', 'Terminal', '/terminal.html'],
     ['contact', 'Contact', '/contact.html']
   ];
 

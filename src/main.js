@@ -2,6 +2,7 @@ import './style.css';
 import { mountHome } from './pages/home';
 import { mountBlackbox } from './pages/blackbox';
 import { mountCabin } from './pages/cabin';
+import { mountTerminal } from './pages/terminal';
 import { mountAbout } from './pages/about';
 import { mountWorks } from './pages/works';
 import { mountLab } from './pages/lab';
@@ -20,6 +21,7 @@ const pageMap = {
   contact: mountContact,
   '404': mountNotFound,
   cabin: mountCabin,
+  terminal: mountTerminal,
 };
 
 if (pageMap[page]) {

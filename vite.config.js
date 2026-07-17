@@ -17,8 +17,9 @@ export default defineConfig({
         lab: resolve(__dirname, 'lab.html'),
         contact: resolve(__dirname, 'contact.html'),
         blackbox: resolve(__dirname, 'blackbox.html'),
-        notfound: resolve(__dirname, '404.html'),
         cabin: resolve(__dirname, 'cabin.html'),
+        terminal: resolve(__dirname, 'terminal.html'),
+        notfound: resolve(__dirname, '404.html'),
       }
     }
   }
