@@ -194,26 +194,53 @@ button, input, textarea {
   isolation: isolate;
 }
 
-/* ── Border Glow ── */
-.panel.glow-border::before {
-  content: "";
+/* ── Border Glow (vue-bits port) ── */
+.panel .bg-overlay {
   position: absolute;
-  inset: -40%;
-  z-index: -1;
+  inset: 0;
+  z-index: 0;
   border-radius: inherit;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    rgba(0,245,255,0.2) 20deg,
-    rgba(155,92,255,0.25) 50deg,
-    rgba(255,43,214,0.2) 80deg,
-    transparent 120deg,
-    transparent 360deg
-  );
-  animation: borderGlowSpin 4s linear infinite;
+  border: 1px solid transparent;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-@keyframes borderGlowSpin {
+.panel .bg-overlay.bg-border {
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(rgba(255,255,255,0) 0% 100%) border-box,
+    radial-gradient(at 80% 55%, var(--glow-c1, #c084fc) 0, transparent 50%) border-box,
+    radial-gradient(at 69% 34%, var(--glow-c2, #f472b6) 0, transparent 50%) border-box,
+    radial-gradient(at 8% 6%,   var(--glow-c3, #38bdf8) 0, transparent 50%) border-box,
+    radial-gradient(at 41% 38%, var(--glow-c1, #c084fc) 0, transparent 50%) border-box,
+    radial-gradient(at 86% 85%, var(--glow-c2, #f472b6) 0, transparent 50%) border-box,
+    radial-gradient(at 82% 18%, var(--glow-c3, #38bdf8) 0, transparent 50%) border-box,
+    radial-gradient(at 51% 4%,  var(--glow-c2, #f472b6) 0, transparent 50%) border-box,
+    linear-gradient(var(--glow-c1, #c084fc) 0 100%) border-box;
+}
+
+.panel .bg-overlay.bg-fill {
+  background:
+    radial-gradient(at 80% 55%, var(--glow-c1, #c084fc) 0, transparent 50%) padding-box,
+    radial-gradient(at 69% 34%, var(--glow-c2, #f472b6) 0, transparent 50%) padding-box,
+    radial-gradient(at 8% 6%,   var(--glow-c3, #38bdf8) 0, transparent 50%) padding-box,
+    radial-gradient(at 41% 38%, var(--glow-c1, #c084fc) 0, transparent 50%) padding-box,
+    radial-gradient(at 86% 85%, var(--glow-c2, #f472b6) 0, transparent 50%) padding-box,
+    radial-gradient(at 82% 18%, var(--glow-c3, #38bdf8) 0, transparent 50%) padding-box,
+    radial-gradient(at 51% 4%,  var(--glow-c2, #f472b6) 0, transparent 50%) padding-box,
+    linear-gradient(var(--glow-c1, #c084fc) 0 100%) padding-box;
+  mix-blend-mode: soft-light;
+}
+
+.panel .bg-outer {
+  position: absolute;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}@keyframes borderGlowSpin {
   to { transform: rotate(360deg); }
 }
 

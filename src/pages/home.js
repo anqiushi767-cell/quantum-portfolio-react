@@ -1,4 +1,4 @@
-import { createSceneBackground, makeTopbar, setupMobile, getMobileStarConfig } from '../shared';
+import { createSceneBackground, makeTopbar, setupMobile, getMobileStarConfig, initBorderGlow } from '../shared';
 
 function buildAdvancedGlitchTitle(text) {
   return `
@@ -53,7 +53,7 @@ export function mountHome(app) {
       ${makeTopbar('home')}
       <section class="hero">
         <div class="grid-two">
-          <div class="panel glow-border">
+          <div class="panel" id="heroPanel">
             <div class="kicker">Quantum Signal // Interactive Portfolio</div>
 
             ${buildAdvancedGlitchTitle("Hello, I'm YZTXA")}
@@ -150,6 +150,16 @@ export function mountHome(app) {
   // ─── Orbit Ring Interactions ───
 
   const orbitRing = document.querySelector('#orbitRing');
+
+  // Border glow on hero panel
+  initBorderGlow(document.querySelector('#heroPanel'), {
+    colors: ['#00f5ff', '#ff2bd6', '#9b5cff'],
+    coneSpread: 25,
+    edgeSensitivity: 28,
+    glowRadius: 35,
+    glowColor: '45 80 70',
+    glowIntensity: 0.8,
+  });
 
   // Parallax tilt on mouse move
   window.addEventListener('mousemove', (e) => {

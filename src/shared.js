@@ -373,3 +373,115 @@ export function getMobileStarConfig(desktop) {
     layers: Math.max(2, Math.floor((desktop.layers || 4) * 0.5)),
   };
 }
+
+export function initBorderGlow(el, opts = {}) {
+  if (!el) return;
+  const {
+    colors = ['#c084fc', '#f472b6', '#38bdf8'],
+    coneSpread = 25,
+    edgeSensitivity = 30,
+    glowRadius = 40,
+    glowColor = '40 80 80',
+    glowIntensity = 1.0,
+  } = opts;
+
+  el.style.setProperty('--glow-c1', colors[0]);
+  el.style.setProperty('--glow-c2', colors[1]);
+  el.style.setProperty('--glow-c3', colors[2]);
+  el.style.setProperty('--bg', getComputedStyle(el).backgroundColor || '#02030a');
+
+  const borderLayer = document.createElement('div');
+  borderLayer.className = 'bg-overlay bg-border';
+  el.appendChild(borderLayer);
+
+  const fillLayer = document.createElement('div');
+  fillLayer.className = 'bg-overlay bg-fill';
+  el.appendChild(fillLayer);
+
+  const outerGlow = document.createElement('div');
+  outerGlow.className = 'bg-outer';
+  el.appendChild(outerGlow);
+
+  let isHovered = false, edgeProx = 0, angle = 45, visible = false;
+
+  function getCenter(el) {
+    const r = el.getBoundingClientRect();
+    return [r.width / 2, r.height / 2];
+  }
+
+  function getProximity(el, x, y) {
+    const [cx, cy] = getCenter(el);
+    const dx = x - cx, dy = y - cy;
+    const kx = dx !== 0 ? cx / Math.abs(dx) : Infinity;
+    const ky = dy !== 0 ? cy / Math.abs(dy) : Infinity;
+    return Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
+  }
+
+  function getAngle(el, x, y) {
+    const [cx, cy] = getCenter(el);
+    const dx = x - cx, dy = y - cy;
+    if (dx === 0 && dy === 0) return 0;
+    let deg = Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+    if (deg < 0) deg += 360;
+    return deg;
+  }
+
+  function maskStr(deg, spread) {
+    return `conic-gradient(from ${deg}deg at center, black ${spread}%, transparent ${spread + 15}%, transparent ${100 - spread - 15}%, black ${100 - spread}%)`;
+  }
+
+  function fillMask(deg) {
+    return [
+      'linear-gradient(black, black)',
+      'radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%)',
+      'radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%)',
+      'radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%)',
+      'radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%)',
+      'radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%)',
+      `conic-gradient(from ${deg}deg at center, transparent 5%, black 15%, black 85%, transparent 95%)`,
+    ].join(', ');
+  }
+
+  function mkShadow(color, intensity) {
+    const [h, s, l] = color.split(' ').map(Number);
+    const layers = [[0,0,0,1,100,1],[0,0,1,0,60,1],[0,0,3,0,50,1],[0,0,6,0,40,1],[0,0,15,0,30,1],[0,0,25,2,20,1],[0,0,50,2,10,1],[0,0,1,0,60,0],[0,0,3,0,50,0],[0,0,6,0,40,0],[0,0,15,0,30,0],[0,0,25,2,20,0],[0,0,50,2,10,0]];
+    return layers.map(([x,y,b,s,a,i]) => `${i?'inset ':''}${x}px ${y}px ${b}px ${s}px hsl(${h}deg ${s}% ${l}% / ${Math.min(a*intensity,100)}%)`).join(', ');
+  }
+
+  function update() {
+    const bOp = visible ? Math.max(0, (edgeProx*100 - (edgeSensitivity+20)) / (100-(edgeSensitivity+20))) : 0;
+    const gOp = visible ? Math.max(0, (edgeProx*100 - edgeSensitivity) / (100-edgeSensitivity)) : 0;
+    const a = angle.toFixed(3), m = maskStr(a, coneSpread), fm = fillMask(a);
+
+    borderLayer.style.opacity = bOp;
+    borderLayer.style.maskImage = m;
+    borderLayer.style.WebkitMaskImage = m;
+
+    fillLayer.style.opacity = bOp * 0.5;
+    fillLayer.style.maskImage = fm;
+    fillLayer.style.WebkitMaskImage = fm;
+    fillLayer.style.maskComposite = 'subtract, add, add, add, add, add';
+    fillLayer.style.WebkitMaskComposite = 'source-out, source-over, source-over, source-over, source-over, source-over';
+
+    outerGlow.style.opacity = gOp;
+    outerGlow.style.inset = `-${glowRadius}px`;
+    const om = `conic-gradient(from ${a}deg at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%)`;
+    outerGlow.style.maskImage = om;
+    outerGlow.style.WebkitMaskImage = om;
+    outerGlow.style.mixBlendMode = 'plus-lighter';
+
+    let inner = outerGlow.querySelector('span');
+    if (!inner) { inner = document.createElement('span'); inner.style.cssText = `position:absolute;border-radius:inherit;inset:${glowRadius}px`; outerGlow.appendChild(inner); }
+    inner.style.boxShadow = mkShadow(glowColor, glowIntensity);
+  }
+
+  el.addEventListener('pointermove', (e) => {
+    const r = el.getBoundingClientRect();
+    edgeProx = getProximity(el, e.clientX - r.left, e.clientY - r.top);
+    angle = getAngle(el, e.clientX - r.left, e.clientY - r.top);
+    update();
+  });
+
+  el.addEventListener('pointerenter', () => { isHovered = true; visible = true; update(); });
+  el.addEventListener('pointerleave', () => { isHovered = false; visible = false; update(); });
+}
