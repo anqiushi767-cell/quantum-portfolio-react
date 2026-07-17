@@ -189,6 +189,32 @@ button, input, textarea {
   background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ── Border Glow ── */
+.panel.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(0,245,255,0.2) 20deg,
+    rgba(155,92,255,0.25) 50deg,
+    rgba(255,43,214,0.2) 80deg,
+    transparent 120deg,
+    transparent 360deg
+  );
+  animation: borderGlowSpin 4s linear infinite;
+}
+
+@keyframes borderGlowSpin {
+  to { transform: rotate(360deg); }
 }
 
 .kicker {

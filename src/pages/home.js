@@ -53,7 +53,7 @@ export function mountHome(app) {
       ${makeTopbar('home')}
       <section class="hero">
         <div class="grid-two">
-          <div class="panel">
+          <div class="panel glow-border">
             <div class="kicker">Quantum Signal // Interactive Portfolio</div>
 
             ${buildAdvancedGlitchTitle("Hello, I'm YZTXA")}
