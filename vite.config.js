@@ -2,8 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
-// Vercel 部署用根路径，GitHub Pages 用仓库名路径
-const base = process.env.VERCEL ? '/' : '/quantum-portfolio-react/'
+// GitHub Pages 部署时设置 GHPAGES=true，其他环境（Vercel/本地）用根路径
+const base = process.env.GHPAGES ? '/quantum-portfolio-react/' : '/';
 
 export default defineConfig({
   plugins: [react()],
