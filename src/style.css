@@ -771,6 +771,28 @@ button, input, textarea {
   position: fixed; inset: 0; z-index: 2; pointer-events: none;
 }
 
+/* ─── Faulty Terminal ─── */
+.terminal-hud {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.term-back {
+  position: fixed; top: 16px; left: 16px; z-index: 3;
+  padding: 8px 14px; border: 1px solid rgba(51,255,51,0.2);
+  border-radius: 8px; background: rgba(0,0,0,0.7); backdrop-filter: blur(10px);
+  color: rgba(51,255,51,0.8); font-size: 13px; letter-spacing: 0.08em;
+  text-decoration: none; transition: all 0.25s ease;
+}
+.term-back:hover { border-color: rgba(51,255,51,0.5); box-shadow: 0 0 16px rgba(51,255,51,0.2); }
+.term-info { display: flex; flex-direction: column; align-items: center; gap: 4px; pointer-events: none; }
+.term-label {
+  font-family: 'Orbitron', sans-serif; font-size: 14px; letter-spacing: 0.15em;
+  color: rgba(51,255,51,0.6);
+}
+.term-sub {
+  font-size: 10px; color: rgba(51,255,51,0.3); letter-spacing: 0.08em;
+}
+
 @media (max-width: 980px) {
   .grid-two,
   .cards,
